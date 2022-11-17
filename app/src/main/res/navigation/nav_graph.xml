@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/logInFragment">
+
+    <fragment
+        android:id="@+id/logInFragment"
+        android:name="com.example.todoapp.view.LogInFragment"
+        android:label="fragment_log_in"
+        tools:layout="@layout/fragment_log_in" >
+        <action
+            android:id="@+id/action_logInFragment_to_registerationFragment"
+            app:destination="@id/registerationFragment" />
+        <action
+            android:id="@+id/action_logInFragment_to_todoFragment"
+            app:destination="@id/todoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerationFragment"
+        android:name="com.example.todoapp.view.RegisterationFragment"
+        android:label="fragment_registeration"
+        tools:layout="@layout/fragment_registeration" />
+    <fragment
+        android:id="@+id/todoFragment"
+        android:name="com.example.todoapp.view.TodoFragment"
+        android:label="fragment_todo"
+        tools:layout="@layout/fragment_todo" >
+        <action
+            android:id="@+id/action_todoFragment_to_addToDo"
+            app:destination="@id/addToDo" />
+    </fragment>
+    <fragment
+        android:id="@+id/addToDo"
+        android:name="com.example.todoapp.view.AddToDoFragment"
+        android:label="fragment_add_to_do"
+        tools:layout="@layout/fragment_add_to_do" />
+</navigation>
