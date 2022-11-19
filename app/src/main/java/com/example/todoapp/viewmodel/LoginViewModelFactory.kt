@@ -25,7 +25,8 @@ class LoginViewModelFactory @Inject constructor(
             ) as T
         } else if (modelClass.isAssignableFrom(TodoViewModel::class.java)) {
             return TodoViewModel(
-                repo = todo
+                repo = todo,
+                login = repo
             ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")

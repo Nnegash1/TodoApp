@@ -12,7 +12,7 @@ import com.example.todoapp.data.model.relation.UserTodo
 
 @Dao
 interface DAO {
-    @Query("select * from LoggedInUser where email =:user and password =:password ")
+    @Query("select * from LoggedInUser where email =:user and password =:password LIMIT 1")
     suspend fun findUser(user: String, password: String): LoggedInUser
 
     @Transaction

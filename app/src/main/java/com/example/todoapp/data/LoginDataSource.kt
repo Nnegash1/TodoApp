@@ -1,5 +1,6 @@
 package com.example.todoapp.data
 
+import android.util.Log
 import com.example.todoapp.data.local.DAO
 import com.example.todoapp.data.model.entities.LoggedInUser
 import kotlinx.coroutines.CoroutineScope
@@ -15,6 +16,7 @@ import javax.inject.Inject
 class LoginDataSource @Inject constructor(private val dao: DAO) {
 
     suspend fun login(email: String, password: String): Result<LoggedInUser> {
+
         val scope = CoroutineScope(Dispatchers.Default)
         val result = scope.async {
             try {
@@ -31,6 +33,7 @@ class LoginDataSource @Inject constructor(private val dao: DAO) {
 
     suspend fun signUp(username: String, email: String, password: String): Result<LoggedInUser> {
         val scope = CoroutineScope(Dispatchers.Default)
+
         val result = scope.async {
             try {
                 // handle loggedInUser authentication
@@ -52,5 +55,6 @@ class LoginDataSource @Inject constructor(private val dao: DAO) {
 
     fun logout() {
         // revoke authentication
+
     }
 }

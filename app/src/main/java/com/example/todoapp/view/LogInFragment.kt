@@ -68,7 +68,7 @@ class LogInFragment : Fragment() {
                 }
                 loginResult.success?.let {
                     updateUiWithUser(it)
-                    val action = LogInFragmentDirections.actionLogInFragmentToTodoFragment2(
+                    val action = LogInFragmentDirections.actionLogInFragmentToTodoFragment(
                         pk = it.pk,
                         user = it.displayName
                     )
@@ -77,7 +77,10 @@ class LogInFragment : Fragment() {
             })
 
         _binding.signIn.setOnClickListener {
-            loginViewModel.login("nahom@gmail.com", "Password")
+            loginViewModel.login(
+                email = usernameEditText.text.toString(),
+                password = passwordEditText.text.toString()
+            )
 
         }
         _binding.newAccount.setOnClickListener {

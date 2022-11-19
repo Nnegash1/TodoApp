@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.todoapp.data.model.entities.TodoApp
 import com.example.todoapp.databinding.FragmentAlertDialogBinding
 import com.example.todoapp.viewmodel.LoginViewModelFactory
@@ -15,7 +16,8 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class FragmentAlertDialog(val pk: Int?, val list: List<TodoApp>) : DialogFragment() {
+class FragmentAlertDialog(val pk: Int?, val list: List<TodoApp>) :
+    DialogFragment() {
 
     @Inject
     lateinit var factory: LoginViewModelFactory
@@ -36,6 +38,9 @@ class FragmentAlertDialog(val pk: Int?, val list: List<TodoApp>) : DialogFragmen
         binding.logout.setOnClickListener {
             if (pk != null) {
                 todo.saveDataToDataBase(pk, list)
+                todo.logout()
+//                val action = FragmentAlertDialogDirections.actionFragmentAlertDialogToLogInFragment2()
+//                findNavController().navigate(action)
             }
         }
     }

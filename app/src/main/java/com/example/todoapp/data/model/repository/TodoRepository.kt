@@ -1,6 +1,5 @@
 package com.example.todoapp.data.model.repository
 
-import android.util.Log
 import com.example.todoapp.data.local.DAO
 import com.example.todoapp.data.model.entities.TodoApp
 import com.example.todoapp.data.model.entities.TodoList
@@ -24,10 +23,9 @@ class TodoRepository(private val dao: DAO) {
         val result = scope.async {
             try {
                 val todo = dao.getTodo(pk)
-                Log.d("TAG", "getUserTodo: $todo")
                 return@async todo.todoList
             } catch (e: NullPointerException) {
-                return@async listOf(TodoApp("Failed", "Body", false))
+                return@async listOf()
             }
         }
         return result.await()

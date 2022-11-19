@@ -42,15 +42,16 @@ class AddToDoFragment : Fragment() {
                 checked = it.complete.isChecked
             }
 
-            if (title.isBlank() || body.isBlank()) {
+            if (!(title.isBlank() || body.isBlank())) {
+                addVm.addToList(TodoApp(title, body, checked))
+                findNavController().popBackStack()
+            } else {
                 Toast.makeText(
                     requireContext(),
                     "Please fill out all the fields !",
                     Toast.LENGTH_SHORT
                 ).show()
             }
-            addVm.addToList(TodoApp(title, body, checked))
-            findNavController().popBackStack()
         }
     }
 }
