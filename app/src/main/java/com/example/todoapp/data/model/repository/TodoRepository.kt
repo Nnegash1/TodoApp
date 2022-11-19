@@ -11,7 +11,7 @@ import kotlinx.coroutines.withContext
 
 class TodoRepository(private val dao: DAO) {
     suspend fun updateTodo(pk: Int, todo: List<TodoApp>) {
-        withContext(Dispatchers.Default) {
+        withContext(Dispatchers.IO) {
             val userExist = dao.updateTodo(pk = pk, todo = todo)
             if (userExist == 0) {
                 dao.insertTodo(TodoList(todoList = todo, user = pk))
@@ -24,12 +24,11 @@ class TodoRepository(private val dao: DAO) {
         val result = scope.async {
             try {
                 val todo = dao.getTodo(pk)
+                Log.d("TAG", "getUserTodo: $todo")
                 return@async todo.todoList
             } catch (e: NullPointerException) {
-                Log.d("TAG", "getUserTodo: $e")
                 return@async listOf(TodoApp("Failed", "Body", false))
             }
-
         }
         return result.await()
     }

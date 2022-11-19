@@ -20,7 +20,8 @@ class LoginViewModelFactory @Inject constructor(
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
             return LoginViewModel(
-                loginRepository = repo
+                loginRepository = repo,
+                todo = todo
             ) as T
         } else if (modelClass.isAssignableFrom(TodoViewModel::class.java)) {
             return TodoViewModel(

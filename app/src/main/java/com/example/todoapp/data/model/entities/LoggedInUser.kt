@@ -14,4 +14,5 @@ data class LoggedInUser(
     val displayName: String,
     val email: String?,
     val password: String?
+//    val isLoggedIn: Boolean
 )

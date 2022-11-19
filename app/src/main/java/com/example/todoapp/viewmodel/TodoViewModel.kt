@@ -1,5 +1,6 @@
 package com.example.todoapp.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,20 +10,29 @@ import kotlinx.coroutines.launch
 
 class TodoViewModel(val repo: TodoRepository) : ViewModel() {
 
-    private val _todoList: MutableLiveData<MutableList<TodoApp>> = MutableLiveData(mutableListOf())
+    companion object {
+        var localTodoList: MutableList<TodoApp> = mutableListOf()
+    }
+
+    private val _todoList: MutableLiveData<MutableList<TodoApp>> = MutableLiveData()
     val todoList get() = _todoList
 
-    fun addTodo(pk: Int, todo: List<TodoApp>) = viewModelScope.launch {
+    fun addToList(todo: TodoApp) = viewModelScope.launch {
+        localTodoList.add(todo)
+        _todoList.value = localTodoList
+    }
+
+    fun saveDataToDataBase(pk: Int, todo: List<TodoApp>) = viewModelScope.launch {
         repo.updateTodo(pk, todo)
     }
 
-    fun getToDo(pk: Int) = viewModelScope.launch {
-        val result = repo.getUserTodo(pk)
-        _todoList.value = result.toMutableList()
+    fun update() {
+        _todoList.value = localTodoList
     }
 
-    fun addToList(todo: TodoApp) {
-        _todoList.value?.add(todo)
+    fun initData(pk: Int) = viewModelScope.launch {
+        Log.d("TAG", "Creating TodoViewModel: ")
+        localTodoList.addAll(repo.getUserTodo(pk).toMutableList())
+        _todoList.value = localTodoList
     }
-
 }

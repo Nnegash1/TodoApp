@@ -8,12 +8,16 @@ import androidx.lifecycle.viewModelScope
 import com.example.todoapp.R
 import com.example.todoapp.data.Result
 import com.example.todoapp.data.model.repository.LoginRepository
+import com.example.todoapp.data.model.repository.TodoRepository
 import com.example.todoapp.viewmodel.state.LoggedInUserView
 import com.example.todoapp.viewmodel.state.LoginFormState
 import com.example.todoapp.viewmodel.state.LoginResult
 import kotlinx.coroutines.launch
 
-class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
+class LoginViewModel(
+    private val loginRepository: LoginRepository,
+    private val todo: TodoRepository
+) : ViewModel() {
 
     private val _loginForm = MutableLiveData<LoginFormState>()
     val loginFormState: LiveData<LoginFormState> = _loginForm
@@ -29,7 +33,8 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
                 LoginResult(
                     success = LoggedInUserView(
                         displayName = result.data.displayName,
-                        result.data.pk
+                        pk = result.data.pk,
+                        todoList = todo.getUserTodo(result.data.pk)
                     )
                 )
         } else {

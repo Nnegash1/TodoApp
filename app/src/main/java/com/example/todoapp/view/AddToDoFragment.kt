@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -21,6 +22,9 @@ class AddToDoFragment : Fragment() {
     lateinit var factory: LoginViewModelFactory
     lateinit var binding: FragmentAddToDoBinding
     private val addVm: TodoViewModel by activityViewModels { factory }
+    private var title: String = ""
+    private var body: String = ""
+    private var checked: Boolean = false
 
 
     override fun onCreateView(
@@ -32,7 +36,20 @@ class AddToDoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.addTodo.setOnClickListener {
-            addVm.addToList(TodoApp("Nahom", "Negash", false))
+            binding.let {
+                title = it.todoTitle.text.toString()
+                body = it.todoDetail.text.toString()
+                checked = it.complete.isChecked
+            }
+
+            if (title.isBlank() || body.isBlank()) {
+                Toast.makeText(
+                    requireContext(),
+                    "Please fill out all the fields !",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            addVm.addToList(TodoApp(title, body, checked))
             findNavController().popBackStack()
         }
     }

@@ -14,14 +14,25 @@
             android:id="@+id/action_logInFragment_to_registerationFragment"
             app:destination="@id/registerationFragment" />
         <action
-            android:id="@+id/action_logInFragment_to_todoFragment"
-            app:destination="@id/todoFragment" />
+            android:id="@+id/action_logInFragment_to_todoFragment2"
+            app:destination="@id/todoFragment"
+            app:enterAnim="@anim/nav_default_enter_anim" />
     </fragment>
     <fragment
         android:id="@+id/registerationFragment"
-        android:name="com.example.todoapp.view.RegisterationFragment"
+        android:name="com.example.todoapp.view.RegistrationFragment"
         android:label="fragment_registeration"
         tools:layout="@layout/fragment_registeration" />
+    <fragment
+        android:id="@+id/addToDo"
+        android:name="com.example.todoapp.view.AddToDoFragment"
+        android:label="fragment_add_to_do"
+        tools:layout="@layout/fragment_add_to_do" />
+    <fragment
+        android:id="@+id/fragmentAlertDialog"
+        android:name="com.example.todoapp.view.FragmentAlertDialog"
+        android:label="fragment_alert_dialog"
+        tools:layout="@layout/fragment_alert_dialog" />
     <fragment
         android:id="@+id/todoFragment"
         android:name="com.example.todoapp.view.TodoFragment"
@@ -30,10 +41,11 @@
         <action
             android:id="@+id/action_todoFragment_to_addToDo"
             app:destination="@id/addToDo" />
+        <argument
+            android:name="user"
+            app:argType="string" />
+        <argument
+            android:name="pk"
+            app:argType="integer" />
     </fragment>
-    <fragment
-        android:id="@+id/addToDo"
-        android:name="com.example.todoapp.view.AddToDoFragment"
-        android:label="fragment_add_to_do"
-        tools:layout="@layout/fragment_add_to_do" />
 </navigation>
