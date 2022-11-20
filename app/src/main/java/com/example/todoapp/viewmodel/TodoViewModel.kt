@@ -12,12 +12,12 @@ import kotlinx.coroutines.launch
 class TodoViewModel(private val repo: TodoRepository, private val login: LoginRepository) :
     ViewModel() {
 
-    companion object {
-        var localTodoList: MutableList<TodoApp> = mutableListOf()
-    }
 
+    var localTodoList: MutableList<TodoApp> = mutableListOf()
     private val _todoList: MutableLiveData<MutableList<TodoApp>> = MutableLiveData()
+    private val _todo: MutableLiveData<TodoApp> = MutableLiveData()
     val todoList get() = _todoList
+    val todo get() = _todo
 
     fun addToList(todo: TodoApp) = viewModelScope.launch {
         localTodoList.add(todo)
@@ -28,12 +28,30 @@ class TodoViewModel(private val repo: TodoRepository, private val login: LoginRe
         repo.updateTodo(pk, todo)
     }
 
+    fun getTodoAtIndex(index: Int) = viewModelScope.launch {
+        try {
+            localTodoList.removeAt(index)
+        } catch (e: IndexOutOfBoundsException) {
+            Log.d("TAG", "Index out of bound: ")
+        }
+    }
+
+    fun setTodoAtIndex(index: Int) = viewModelScope.launch {
+        try {
+            todo.value?.let {
+                localTodoList[index] = it
+            }
+        } catch (e: IndexOutOfBoundsException) {
+            Log.d("TAG", "Index out of bound: ")
+        }
+    }
+
     fun update() {
         _todoList.value = localTodoList
     }
 
-    fun logout() {
-        login.logout()
+    fun logout(pk: Int, isLoggedIn: Boolean) = viewModelScope.launch {
+        login.logout(pk, isLoggedIn)
     }
 
     fun initData(pk: Int) = viewModelScope.launch {

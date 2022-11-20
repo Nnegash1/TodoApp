@@ -13,6 +13,6 @@ data class LoggedInUser(
     val userId: String,
     val displayName: String,
     val email: String?,
-    val password: String?
-//    val isLoggedIn: Boolean
+    val password: String?,
+    val isLoggedIn: Boolean = false
 )

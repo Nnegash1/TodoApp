@@ -6,6 +6,7 @@ import com.example.todoapp.data.model.entities.LoggedInUser
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
+import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.util.UUID
 import javax.inject.Inject
@@ -14,6 +15,11 @@ import javax.inject.Inject
  * Class that handles authentication w/ login credentials and retrieves user information.
  */
 class LoginDataSource @Inject constructor(private val dao: DAO) {
+
+    private suspend fun userStatus(pk: Int, isLoggedIn: Boolean) =
+        withContext(Dispatchers.Default) {
+            dao.logoutUser(pk, isLoggedIn)
+        }
 
     suspend fun login(email: String, password: String): Result<LoggedInUser> {
 
@@ -53,8 +59,8 @@ class LoginDataSource @Inject constructor(private val dao: DAO) {
         return result.await()
     }
 
-    fun logout() {
-        // revoke authentication
-
+    suspend fun logout(pk: Int, isLoggedIn: Boolean) {
+        Log.d("TAG", "logout: $pk  $isLoggedIn")
+        userStatus(pk, isLoggedIn)
     }
 }

@@ -8,6 +8,7 @@ import com.example.todoapp.data.model.entities.TodoApp
 data class LoggedInUserView(
     val displayName: String,
     val pk: Int,
-    val todoList: List<TodoApp>
+    val todoList: List<TodoApp>,
+    val isLoggedIn: Boolean
     //... other data fields that may be accessible to the UI
 )

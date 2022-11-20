@@ -29,12 +29,14 @@ class LoginViewModel(
         // can be launched in a separate asynchronous job
         val result = loginRepository.login(email, password)
         if (result is Result.Success) {
+            val user = todo.getUserTodo(result.data.pk)
             _loginResult.value =
                 LoginResult(
                     success = LoggedInUserView(
                         displayName = result.data.displayName,
                         pk = result.data.pk,
-                        todoList = todo.getUserTodo(result.data.pk)
+                        todoList = user,
+                        isLoggedIn = result.data.isLoggedIn
                     )
                 )
         } else {

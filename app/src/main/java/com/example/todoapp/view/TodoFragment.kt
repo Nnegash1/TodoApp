@@ -1,7 +1,6 @@
 package com.example.todoapp.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,7 +25,9 @@ class TodoFragment : Fragment() {
     private lateinit var bindings: FragmentTodoBinding
     private val todoVm: TodoViewModel by activityViewModels { factory }
     private val args by navArgs<TodoFragmentArgs>()
-    private val adapter = TodoAdapter()
+    private val adapter = TodoAdapter {
+        editPage(it)
+    }
     private var _todoList: List<TodoApp> = listOf()
 
     override fun onCreateView(
@@ -44,7 +45,6 @@ class TodoFragment : Fragment() {
 
         todoVm.todoList.observe(viewLifecycleOwner) {
             _todoList = it.toList()
-            Log.d("TAG", "Testing: $_todoList")
             adapter.update(it)
         }
 
@@ -58,6 +58,7 @@ class TodoFragment : Fragment() {
             findNavController().navigate(action)
         }
 
+
         bindings.user.text = args.user
         initAdapter()
     }
@@ -65,6 +66,11 @@ class TodoFragment : Fragment() {
     private fun initAdapter() {
         bindings.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         bindings.recyclerView.adapter = adapter
+    }
+
+    private fun editPage(index: Int) {
+        val action = TodoFragmentDirections.actionTodoFragmentToEditToDoScreen(index)
+        findNavController().navigate(action)
     }
 
 }

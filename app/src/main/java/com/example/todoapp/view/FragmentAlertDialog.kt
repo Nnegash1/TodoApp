@@ -38,7 +38,7 @@ class FragmentAlertDialog(val pk: Int?, val list: List<TodoApp>) :
         binding.logout.setOnClickListener {
             if (pk != null) {
                 todo.saveDataToDataBase(pk, list)
-                todo.logout()
+                todo.logout(pk, false)
 //                val action = FragmentAlertDialogDirections.actionFragmentAlertDialogToLogInFragment2()
 //                findNavController().navigate(action)
             }

@@ -9,11 +9,15 @@ import com.example.todoapp.data.model.entities.LoggedInUser
 import com.example.todoapp.data.model.entities.TodoApp
 import com.example.todoapp.data.model.entities.TodoList
 import com.example.todoapp.data.model.relation.UserTodo
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface DAO {
     @Query("select * from LoggedInUser where email =:user and password =:password LIMIT 1")
     suspend fun findUser(user: String, password: String): LoggedInUser
+
+    @Query("Update LoggedInUser set isLoggedIn =:status where pk=:pk")
+    suspend fun logoutUser(pk: Int, status: Boolean)
 
     @Transaction
     @Query("select * from LoggedInUser")

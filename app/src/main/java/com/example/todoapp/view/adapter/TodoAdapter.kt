@@ -8,11 +8,12 @@ import com.example.todoapp.data.model.entities.TodoApp
 import com.example.todoapp.databinding.TodoCardBinding
 
 
-class TodoAdapter : RecyclerView.Adapter<CardHolder>() {
+class TodoAdapter(private val selector: (Int) -> Unit) : RecyclerView.Adapter<CardHolder>() {
     private val todoList: MutableList<TodoApp> = mutableListOf()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardHolder {
         return CardHolder(
-            TodoCardBinding.inflate(LayoutInflater.from(parent.context))
+            TodoCardBinding.inflate(LayoutInflater.from(parent.context)),
+            selected = selector
         )
     }
 
@@ -20,18 +21,22 @@ class TodoAdapter : RecyclerView.Adapter<CardHolder>() {
 
     override fun onBindViewHolder(holder: CardHolder, position: Int) {
         holder.display(todoList[position])
+        holder.itemView.setOnClickListener {
+            selector(position)
+        }
     }
 
-    fun update(newList : List<TodoApp>){
+    fun update(newList: List<TodoApp>) {
         val oldSize = todoList.size
         todoList.clear()
-        notifyItemRangeChanged(0 , oldSize)
+        notifyItemRangeChanged(0, oldSize)
         todoList.addAll(newList)
-        notifyItemRangeChanged(0 , newList.size)
+        notifyItemRangeChanged(0, newList.size)
     }
 }
 
-class CardHolder(private val binding: TodoCardBinding) : ViewHolder(binding.root) {
+class CardHolder(private val binding: TodoCardBinding, selected: (Int) -> Unit) :
+    ViewHolder(binding.root) {
     fun display(card: TodoApp) {
         with(binding) {
             title.text = card.title
