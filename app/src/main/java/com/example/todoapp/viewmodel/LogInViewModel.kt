@@ -28,7 +28,7 @@ class LoginViewModel(
     fun login(email: String, password: String) = viewModelScope.launch {
         // can be launched in a separate asynchronous job
         val result = loginRepository.login(email, password)
-        if (result is Result.Success) {
+        if (result is Result.Success && loginRepository.isLoggedIn) {
             val user = todo.getUserTodo(result.data.pk)
             _loginResult.value =
                 LoginResult(

@@ -1,6 +1,7 @@
 package com.example.todoapp.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,9 +39,8 @@ class FragmentAlertDialog(val pk: Int?, val list: List<TodoApp>) :
         binding.logout.setOnClickListener {
             if (pk != null) {
                 todo.saveDataToDataBase(pk, list)
-                todo.logout(pk, false)
-//                val action = FragmentAlertDialogDirections.actionFragmentAlertDialogToLogInFragment2()
-//                findNavController().navigate(action)
+                Log.d("TAG", "Status: Logging Out ")
+                todo.logout(pk)
             }
         }
     }

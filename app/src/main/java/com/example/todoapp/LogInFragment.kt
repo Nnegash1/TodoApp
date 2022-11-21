@@ -1,8 +1,9 @@
-package com.example.todoapp.view
+package com.example.todoapp
 
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,18 +11,16 @@ import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.example.todoapp.R
 import com.example.todoapp.databinding.FragmentLogInBinding
 import com.example.todoapp.viewmodel.LoginViewModel
 import com.example.todoapp.viewmodel.LoginViewModelFactory
-import com.example.todoapp.viewmodel.TodoViewModel
 import com.example.todoapp.viewmodel.state.LoggedInUserView
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class LogInFragment : Fragment() {
@@ -29,7 +28,6 @@ class LogInFragment : Fragment() {
     @Inject
     lateinit var factory: LoginViewModelFactory
     private val loginViewModel: LoginViewModel by viewModels { factory }
-    private val todo: TodoViewModel by activityViewModels { factory }
     private lateinit var _binding: FragmentLogInBinding
 
     override fun onCreateView(
@@ -80,14 +78,15 @@ class LogInFragment : Fragment() {
             loginViewModel.login(
                 email = usernameEditText.text.toString(),
                 password = passwordEditText.text.toString()
+
             )
 
         }
+
         _binding.newAccount.setOnClickListener {
             val action = LogInFragmentDirections.actionLogInFragmentToRegisterationFragment()
             findNavController().navigate(action)
         }
-
 
         val afterTextChangedListener = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {

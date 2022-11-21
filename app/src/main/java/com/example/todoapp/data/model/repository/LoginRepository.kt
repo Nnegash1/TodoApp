@@ -24,7 +24,7 @@ class LoginRepository(private val dataSource: LoginDataSource) {
         user = null
     }
 
-    suspend fun logout(pk: Int, isLoggedIn: Boolean) {
+    suspend fun logout(pk: Int) {
         user = null
         dataSource.logout(pk, isLoggedIn)
     }

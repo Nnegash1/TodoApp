@@ -21,9 +21,8 @@
         android:label="fragment_alert_dialog"
         tools:layout="@layout/fragment_alert_dialog" >
         <action
-            android:id="@+id/action_fragmentAlertDialog_to_logInFragment2"
-            app:destination="@id/logInFragment"
-            app:launchSingleTop="true" />
+            android:id="@+id/action_fragmentAlertDialog_to_logInFragment"
+            app:destination="@id/logInFragment" />
     </fragment>
     <fragment
         android:id="@+id/todoFragment"
@@ -44,18 +43,6 @@
             app:destination="@id/editToDoScreen" />
     </fragment>
     <fragment
-        android:id="@+id/logInFragment"
-        android:name="com.example.todoapp.view.LogInFragment"
-        android:label="fragment_log_in"
-        tools:layout="@layout/fragment_log_in" >
-        <action
-            android:id="@+id/action_logInFragment_to_registerationFragment"
-            app:destination="@id/registerationFragment" />
-        <action
-            android:id="@+id/action_logInFragment_to_todoFragment"
-            app:destination="@id/todoFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/editToDoScreen"
         android:name="com.example.todoapp.EditToDoScreen"
         android:label="fragment_edit_to_do_screen"
@@ -63,5 +50,17 @@
         <argument
             android:name="index"
             app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/logInFragment"
+        android:name="com.example.todoapp.LogInFragment"
+        android:label="fragment_log_in"
+        tools:layout="@layout/fragment_log_in" >
+        <action
+            android:id="@+id/action_logInFragment_to_todoFragment"
+            app:destination="@id/todoFragment" />
+        <action
+            android:id="@+id/action_logInFragment_to_registerationFragment"
+            app:destination="@id/registerationFragment" />
     </fragment>
 </navigation>

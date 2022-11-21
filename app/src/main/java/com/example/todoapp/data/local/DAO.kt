@@ -9,7 +9,6 @@ import com.example.todoapp.data.model.entities.LoggedInUser
 import com.example.todoapp.data.model.entities.TodoApp
 import com.example.todoapp.data.model.entities.TodoList
 import com.example.todoapp.data.model.relation.UserTodo
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface DAO {

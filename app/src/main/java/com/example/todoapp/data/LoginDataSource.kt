@@ -22,12 +22,13 @@ class LoginDataSource @Inject constructor(private val dao: DAO) {
         }
 
     suspend fun login(email: String, password: String): Result<LoggedInUser> {
-
         val scope = CoroutineScope(Dispatchers.Default)
         val result = scope.async {
             try {
                 // handle loggedInUser authentication
-                val result = dao.findUser(email, password)
+                var result = dao.findUser(email, password)
+                dao.logoutUser(result.pk, true)
+                result = dao.findUser(email, password)
                 return@async Result.Success(result)
             } catch (e: Throwable) {
                 return@async Result.Error(IOException("Error logging in", e))
@@ -47,7 +48,8 @@ class LoginDataSource @Inject constructor(private val dao: DAO) {
                     userId = UUID.randomUUID().toString(),
                     displayName = username,
                     email = email,
-                    password = password
+                    password = password,
+                    isLoggedIn = false
                 )
                 dao.insertUser(fakeUser)
                 return@async Result.Success(fakeUser)

@@ -50,8 +50,8 @@ class TodoViewModel(private val repo: TodoRepository, private val login: LoginRe
         _todoList.value = localTodoList
     }
 
-    fun logout(pk: Int, isLoggedIn: Boolean) = viewModelScope.launch {
-        login.logout(pk, isLoggedIn)
+    fun logout(pk: Int) = viewModelScope.launch {
+        login.logout(pk)
     }
 
     fun initData(pk: Int) = viewModelScope.launch {
